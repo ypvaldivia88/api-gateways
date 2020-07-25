@@ -12,6 +12,10 @@ const deviceSchema = new mongoose.Schema({
     default: 'offline',
     required: true,
   },
+  gateway: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Gateway',
+  },
 });
 
-module.exports = mongoose.model('device', deviceSchema);
+module.exports = mongoose.model('Device', deviceSchema);

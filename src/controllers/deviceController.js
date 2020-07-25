@@ -1,15 +1,16 @@
 'use strict';
 
 var Device = require('../services/device.service');
+var Gateway = require('../services/gateway.service');
 
-exports.list = function (req, res) {
+module.exports.list = function (req, res) {
   Device.list(function (err, device) {
     if (err) return res.send(err);
     res.json(device);
   });
 };
 
-exports.create = function (req, res) {
+module.exports.create = function (req, res) {
   var new_device = req.body;
   if (!new_device.uid)
     return res
@@ -19,29 +20,33 @@ exports.create = function (req, res) {
     return res
       .status(400)
       .send({ error: true, message: 'Path `vendor` is required' });
+  if (!new_device.gateway)
+    return res
+      .status(400)
+      .send({ error: true, message: 'Path `gateway` is required' });
   Device.create(new_device, function (err, device) {
     if (err) return res.send(err);
     res.json(device);
   });
 };
 
-exports.read = function (req, res) {
+module.exports.read = function (req, res) {
   Device.getById(req.params.id, function (err, device) {
     if (err) return res.send(err);
     res.json(device);
   });
 };
 
-exports.update = function (req, res) {
+module.exports.update = function (req, res) {
   Device.update(req.params.id, req.body, function (err, device) {
     if (err) return res.send(err);
     res.json(device);
   });
 };
 
-exports.delete = function (req, res) {
-  Device.remove(req.params.id, function (err) {
+module.exports.delete = function (req, res) {
+  Device.delete(req.params.id, function (err) {
     if (err) return res.send(err);
-    res.json({ message: 'Device eliminada correctamente' });
+    res.json({ message: 'Device deleted correctly' });
   });
 };

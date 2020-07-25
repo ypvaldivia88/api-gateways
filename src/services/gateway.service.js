@@ -1,14 +1,24 @@
 const gateway = require('../models/gateway');
 
 module.exports.list = async function (result) {
-  await gateway.find(function (err, res) {
+  await gateway
+    .find({})
+    .populate('devices')
+    .exec(function (err, res) {
+      if (err) throw new Error(err.message);
+      console.log(res);
+      result(null, res);
+    });
+};
+
+module.exports.read = async function (id, result) {
+  await gateway.findById(id, function (err, res) {
     if (err) throw new Error(err.message);
-    console.log(res);
     result(null, res);
   });
 };
 
-module.exports.read = async function (id, result) {
+module.exports.getDevices = async function (id, result) {
   await gateway.findById(id, function (err, res) {
     if (err) throw new Error(err.message);
     result(null, res);
