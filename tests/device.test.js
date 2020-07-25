@@ -1,7 +1,10 @@
+// tests/device.test.js
+
 const mongoose = require('mongoose');
 
 const dbHandler = require('../src/config/db-handler');
 const deviceService = require('../src/services/device.service');
+const deviceModel = require('../src/models/device');
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -19,7 +22,7 @@ afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
 
 /**
- * device test suite.
+ * Product test suite.
  */
 describe('device ', () => {
   /**
@@ -61,17 +64,11 @@ describe('device ', () => {
 });
 
 /**
- * Create device example.
+ * Complete device example.
  */
-const deviceCreate = {
+const deviceTest = {
   uid: 699,
-  vendor: 'Samsung',
+  vendor: 'iPhone 11',
   status: 'offline',
-};
-
-/**
- * Update device example.
- */
-const deviceUpdate = {
-  status: 'online',
+  gateway: '1234fw4tg252',
 };
