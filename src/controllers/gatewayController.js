@@ -19,10 +19,16 @@ exports.create = function (req, res) {
     return res
       .status(400)
       .send({ error: true, message: 'Path `name` is required' });
-  if (!new_gateway.ipv4 || !ValidateIPaddress(new_gateway.ipv4)) {
+  if (!new_gateway.ipv4) {
     return res.status(400).send({
       error: true,
-      message: 'Path `ipv4` is required and needs to be a valid ipv4 address',
+      message: 'Path `ipv4` is required',
+    });
+  }
+  if (!ValidateIPaddress(new_gateway.ipv4)) {
+    return res.status(400).send({
+      error: true,
+      message: 'Path `ipv4` needs to be a valid ipv4 address',
     });
   }
   Gateway.create(new_gateway, function (err, gateway) {
