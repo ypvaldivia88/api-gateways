@@ -47,3 +47,10 @@ module.exports.delete = async function (id, result) {
     result(null, res);
   });
 };
+
+module.exports.devicesByGateway = async function (gateId, result) {
+  await device.find({ gateway: gateId }, function (err, res) {
+    if (err) throw new Error(err.message);
+    result(null, res);
+  });
+};

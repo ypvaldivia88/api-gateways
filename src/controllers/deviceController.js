@@ -10,7 +10,7 @@ module.exports.list = function (req, res) {
   });
 };
 
-module.exports.create = function (req, res) {
+module.exports.create = (req, res) => {
   var new_device = req.body;
   if (!new_device.uid)
     return res
@@ -24,9 +24,20 @@ module.exports.create = function (req, res) {
     return res
       .status(400)
       .send({ error: true, message: 'Path `gateway` is required' });
-  Device.create(new_device, function (err, device) {
+
+  Gateway.getDevices(new_device.gateway, (err, devicesInGateway) => {
     if (err) return res.send(err);
-    res.json(device);
+    if (!devicesInGateway.length < 10) {
+      return res.status(400).send({
+        error: true,
+        message: 'Maximun limit of devices for this gateway',
+      });
+    } else {
+      Device.create(new_device, (err, device) => {
+        if (err) return res.send(err);
+        res.json(device);
+      });
+    }
   });
 };
 
