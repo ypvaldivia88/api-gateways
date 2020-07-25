@@ -1,10 +1,7 @@
 // tests/gateway.test.js
 
-const mongoose = require('mongoose');
-
 const dbHandler = require('../src/config/db-handler');
 const gatewayService = require('../src/services/gateway.service');
-const gatewayModel = require('../src/models/gateway');
 
 /**
  * Connect to a new in-memory database before running any tests.
